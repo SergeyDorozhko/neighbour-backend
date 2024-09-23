@@ -9,19 +9,15 @@ package by.darozhka.neighbour.dto;
 
 import by.darozhka.neighbour.entity.Item;
 
-import java.util.Objects;
-
 /**
  * @author S.Darozhka
  */
-public record ItemDto(Long id, String name) {
+public record ItemCreateDto(String name) {
 
-    public static ItemDto from(Item item) {
-        if (Objects.isNull(item)) {
-            return null;
-        }
+    public Item toEntity() {
+        Item item = new Item();
+        item.setName(name());
 
-        return new ItemDto(item.getId(),
-                item.getName());
+        return item;
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author S.Darozhka
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "by.darozhka.neighbour")
 public class NeighbourApplication {
 
     public static void main(String[] args) {

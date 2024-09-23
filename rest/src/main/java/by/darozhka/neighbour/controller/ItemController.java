@@ -7,11 +7,11 @@
 
 package by.darozhka.neighbour.controller;
 
+import by.darozhka.neighbour.dto.ItemCreateDto;
 import by.darozhka.neighbour.dto.ItemDto;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import by.darozhka.neighbour.service.ItemService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,8 +22,21 @@ import java.util.List;
 @RequestMapping("/public/api/v1/items")
 public class ItemController {
 
+    @Autowired
+    private ItemService itemService;
+
     @GetMapping
     public List<ItemDto> getPage(@RequestParam(name = "size") int size) {
-        return List.of(new ItemDto(1L, "дрель", "дрель электрическая"));
+        return List.of(new ItemDto(1L, "дрель"));
+    }
+
+    @GetMapping("/{id}")
+    public ItemDto getItem(@PathVariable(name = "id") Long id) {
+        return ItemDto.from(itemService.getItem(id));
+    }
+
+    @PostMapping
+    public ItemDto createItem(@RequestBody ItemCreateDto request) {
+        return ItemDto.from(itemService.save(request.toEntity()));
     }
 }
